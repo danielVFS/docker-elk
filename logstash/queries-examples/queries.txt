@@ -1,11 +1,19 @@
+# Get a documment
 GET despesas-item-empenho-historico/_doc/yWEwH4EBlcNIoj_JW3T4
 
-GET despesas-item-empenho-historico/_doc/zGEwH4EBlcNIoj_JW3T4
-PUT despesas-item-empenho-historico/_doc/zGEwH4EBlcNIoj_JW3T4
+# Update a documment
+POST despesas-item-empenho-historico/_update/yWEwH4EBlcNIoj_JW3T4
 {
-  "Tipo Operação": "ANULAÇÃO"
+  "doc": {
+    "Data Operação": "13/01/2022"
+  }
 }
 
+# Delete a document
+DELETE despesas-item-empenho-historico/_doc/yWEwH4EBlcNIoj_JW3T4
+
+
+# ----------- Search Queries ----------------------
 GET despesas-item-empenho-historico/_search
 {
   "_source": false,
@@ -26,6 +34,7 @@ GET despesas-item-empenho-historico/_search
   }
 }
 
+
 GET despesas-item-empenho-historico/_search
 {
   "_source": false,
@@ -35,3 +44,5 @@ GET despesas-item-empenho-historico/_search
     }
   }
 }
+
+# ------------------------------------------------
