@@ -10,7 +10,7 @@ input {
 filter {
   csv {
 		separator => ";"
-    columns => ["Id Empenho","Código Empenho","Sequencial", "Tipo Operação", "Data Operação", "Quantidade Item", "Valor Unitário Item", "Valor Total Item"]
+    columns => ["Id Empenho", "Sequencial", "Tipo Operação", "Data Operação", "Quantidade Item", "Valor Unitário Item", "Valor Total Item"]
   }
 }
 
