@@ -1,0 +1,37 @@
+GET despesas-item-empenho-historico/_doc/yWEwH4EBlcNIoj_JW3T4
+
+GET despesas-item-empenho-historico/_doc/zGEwH4EBlcNIoj_JW3T4
+PUT despesas-item-empenho-historico/_doc/zGEwH4EBlcNIoj_JW3T4
+{
+  "Tipo Operação": "ANULAÇÃO"
+}
+
+GET despesas-item-empenho-historico/_search
+{
+  "_source": false,
+  "query": {
+    "match": {
+      "Data Operação": "11/01/2022"
+    }
+  }
+}
+
+GET despesas-item-empenho-historico/_search
+{
+  "_source": false,
+  "query": {
+    "match": {
+      "Código Empenho": "158153264292021NE000016"
+    }
+  }
+}
+
+GET despesas-item-empenho-historico/_search
+{
+  "_source": false,
+  "query": {
+    "match": {
+      "Valor Total Item": "3545,64000"
+    }
+  }
+}
