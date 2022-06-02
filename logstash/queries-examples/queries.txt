@@ -1,3 +1,7 @@
+# Get all documents
+GET despesas-item-empenho-historico/_search
+
+
 # Get a documment
 GET despesas-item-empenho-historico/_doc/yWEwH4EBlcNIoj_JW3T4
 
@@ -45,4 +49,79 @@ GET despesas-item-empenho-historico/_search
   }
 }
 
+GET despesas-item-empenho-historico/_search
+{
+  "_source": false,
+  "query": {
+    "range": {
+      "Data Operação": {
+        "gte": "12/01/2021",
+        "lte": "13/01/2021"
+      }
+    }
+  }
+}
+
+
+GET despesas-item-empenho-historico/_search
+{
+  "_source": false,
+  "aggs": {
+    "by_category": {
+      "terms": {
+        "field": "Tipo Operação.keyword",
+        "size": 100
+      }
+    }
+  }
+}
+
+GET despesas-item-empenho-historico/_search
+{
+  "_source": false,
+  "aggs": {
+    "sum_unit_price": {
+      "sum": {
+        "field": "Quantidade Item.keyword"
+      }
+    }
+  }
+}
+
+
 # ------------------------------------------------
+
+# Enable to use not only the keyword
+PUT despesas-item-empenho-historico/_mapping
+{
+  "properties": {
+    "Tipo Operação": { 
+      "type":"text",
+      "fielddata": true
+    }
+  }
+}
+
+# Enable to use not only the keyword
+PUT despesas-item-empenho-historico/_mapping
+{
+  "properties": {
+    "Quantidade Item": { 
+      "type": "text",
+      "fielddata": true
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
