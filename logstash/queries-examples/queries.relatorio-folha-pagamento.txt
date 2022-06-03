@@ -1,0 +1,80 @@
+# Get all documents
+GET relatorio-folha-pagamento-anapolis-maio-2022/_search
+
+
+
+# ----------- Search Queries ----------------------
+GET relatorio-folha-pagamento-anapolis-maio-2022/_search
+{
+  "_source": false,
+  "query": {
+    "match": {
+      "Data Admissão": "01/05/2007"
+    }
+  }
+}
+
+
+
+GET relatorio-folha-pagamento-anapolis-maio-2022/_search
+{
+  "query": {
+    "match": {
+      "Proventos": 3.58089
+    }
+  }
+}
+
+GET relatorio-folha-pagamento-anapolis-maio-2022/_search
+{
+  "_source": false,
+  "query": {
+    "range": {
+      "Data Admissão": {
+        "gte": "10/01/2005",
+        "lte": "01/05/2007"
+      }
+    }
+  }
+}
+
+
+GET relatorio-folha-pagamento-anapolis-maio-2022/_search
+{
+  "_source": false,
+  "aggs": {
+    "by_category": {
+      "terms": {
+        "field": "Tipo de Folha.keyword",
+        "size": 100
+      }
+    }
+  }
+}
+
+GET relatorio-folha-pagamento-anapolis-maio-2022/_search
+{
+  "_source": false,
+  "aggs": {
+    "sum_unit_price": {
+      "sum": {
+        "field": "Proventos"
+      }
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

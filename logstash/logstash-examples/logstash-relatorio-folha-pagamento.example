@@ -15,9 +15,12 @@ filter {
   }
   mutate {
     convert => { "Matrícula" => "integer" }
-    convert => { "Proventos" => "long" }
-    convert => { "Descontos" => "long" }
-    convert => { "Liquido" => "long" }
+    convert => { "Proventos" => "float" }
+    convert => { "Descontos" => "float" }
+    convert => { "Liquido" => "float" }
+  }
+  date {
+    match => [ "Data Admissão", "YY/MM/dd HH:mm:ss" ]
   }
 }
 
