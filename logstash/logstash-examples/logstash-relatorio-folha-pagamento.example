@@ -9,18 +9,16 @@ input {
 
 filter {
   csv {
-		separator => ";"
-    columns => ["Nome", "Referência", "Matrícula", "Tipo de Folha", "Proventos", "Descontos", "Liquido", "Cargo",
-    "Vinculo", "Data Admissão", "Lotação"]
+		separator => ","
+    columns => ["Nome", "Referência", "Matrícula", "Tipo de Folha", "Proventos", "Descontos", "Liquido", "Cargo", "Vinculo","Data Admissão", "Lotação"]
   }
-  mutate {
-    convert => { "Matrícula" => "integer" }
+   mutate {
     convert => { "Proventos" => "float" }
     convert => { "Descontos" => "float" }
     convert => { "Liquido" => "float" }
   }
   date {
-    match => [ "Data Admissão", "YY/MM/dd HH:mm:ss" ]
+    match => ["Data Admissão", "MMM-dd-yyyy HH:mm:ss"]
   }
 }
 
