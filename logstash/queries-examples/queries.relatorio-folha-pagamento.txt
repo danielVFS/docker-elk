@@ -6,10 +6,10 @@ GET relatorio-folha-pagamento-anapolis-maio-2022/_search
 # ----------- Search Queries ----------------------
 GET relatorio-folha-pagamento-anapolis-maio-2022/_search
 {
-  "_source": false,
+  "_source": true,
   "query": {
     "match": {
-      "Data Admissão": "01/05/2007"
+      "Data Admissão": "21/12/2009"
     }
   }
 }
@@ -18,9 +18,9 @@ GET relatorio-folha-pagamento-anapolis-maio-2022/_search
 
 GET relatorio-folha-pagamento-anapolis-maio-2022/_search
 {
-  "query": {
+  "query": {  
     "match": {
-      "Proventos": 3.58089
+      "Proventos": 1388566.0
     }
   }
 }
@@ -32,7 +32,7 @@ GET relatorio-folha-pagamento-anapolis-maio-2022/_search
     "range": {
       "Data Admissão": {
         "gte": "10/01/2005",
-        "lte": "01/05/2007"
+        "lte": "26/01/2006"
       }
     }
   }
@@ -43,7 +43,7 @@ GET relatorio-folha-pagamento-anapolis-maio-2022/_search
 {
   "_source": false,
   "aggs": {
-    "by_category": {
+    "by_tipo_de_folha": {
       "terms": {
         "field": "Tipo de Folha.keyword",
         "size": 100
@@ -56,13 +56,75 @@ GET relatorio-folha-pagamento-anapolis-maio-2022/_search
 {
   "_source": false,
   "aggs": {
-    "sum_unit_price": {
-      "sum": {
-        "field": "Proventos"
+    "by_cargo": {
+      "terms": {
+        "field": "Cargo.keyword",
+        "size": 100
       }
     }
   }
 }
+
+GET relatorio-folha-pagamento-anapolis-maio-2022/_search
+{
+  "_source": false,
+  "query": {
+    "match": {
+      "Cargo": "Nutricionista"
+    }
+  }, 
+  "aggs": {
+    "by_cargo": {
+      "terms": {
+        "field": "Cargo.keyword",
+        "size": 100
+      }
+    }
+  }
+}
+
+GET relatorio-folha-pagamento-anapolis-maio-2022/_search
+{
+  "_source": false,
+  "aggs": {
+    "sum_unit_price": {
+      "sum": {
+        "field": "Liquido"
+      }
+    }
+  }
+}
+
+# -------------- Precision and Recall --------------------
+
+# Increasing Recall
+
+GET relatorio-folha-pagamento-anapolis-maio-2022/_search
+{
+  "query": {
+    "match": {
+      "Cargo": {
+        "query": "Técnico Enfermagem"
+      }
+    }
+  }
+}
+
+# Increasing Precision
+
+GET relatorio-folha-pagamento-anapolis-maio-2022/_search
+{
+  "query": {
+    "match": {
+      "Cargo": {
+        "query": "Técnico Enfermagem",
+        "operator": "and"
+      }
+    }
+  }
+}
+
+# ---------------------------------------------------------
 
 
 
