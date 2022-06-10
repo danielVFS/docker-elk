@@ -46,7 +46,7 @@ GET relatorio-folha-pagamento-anapolis-maio-2022/_search
     "by_tipo_de_folha": {
       "terms": {
         "field": "Tipo de Folha.keyword",
-        "size": 100
+        "size": 10000
       }
     }
   }
@@ -165,6 +165,215 @@ GET relatorio-folha-pagamento-anapolis-maio-2022/_search
     }
   }
 }
+
+# find by multiple cargos
+# ^2 means we are giving more weight on score than the others
+GET relatorio-folha-pagamento-anapolis-maio-2022/_search
+{
+  "query": {
+    "multi_match": {
+      "query": "Goiânia",
+      "fields": [
+        "Origem^2",
+        "Destino" 
+      ]
+    }
+  }
+}
+
+# ----------- Bool query ---------------------------------
+
+GET relatorio-folha-pagamento-anapolis-maio-2022/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "Cargo": "Asessor Geral"
+          }
+        }
+      ],
+      "must_not": [
+        {
+          "match": {
+            "Tipo de Folha": "Recisão"
+          }
+        }
+      ]
+    }
+  }
+}
+
+
+# ----------- Metric Agregations ---------------------------------
+
+# soma dos salários
+GET relatorio-folha-pagamento-anapolis-maio-2022/_search
+{
+  "_source": false,
+  "size": 0,
+  "aggs": {
+    "soma_salarios": {
+      "sum": {
+        "field": "Liquido"
+      }
+    }
+  }
+}
+
+# menor salário
+GET relatorio-folha-pagamento-anapolis-maio-2022/_search
+{
+  "_source": true,
+  "size": 0,
+  "aggs": {
+    "menor_salario": {
+      "min": {
+        "field": "Liquido"
+      }
+    }
+  }
+}
+
+# menor salário
+GET relatorio-folha-pagamento-anapolis-maio-2022/_search
+{
+  "_source": true,
+  "size": 0,
+  "aggs": {
+    "maior_salario": {
+      "max": {
+        "field": "Liquido"
+      }
+    }
+  }
+}
+
+# media salário
+GET relatorio-folha-pagamento-anapolis-maio-2022/_search
+{
+  "_source": true,
+  "size": 0,
+  "aggs": {
+    "media_salario": {
+      "avg": {
+        "field": "Liquido"
+      }
+    }
+  }
+}
+
+# Todos em um
+GET relatorio-folha-pagamento-anapolis-maio-2022/_search
+{
+  "_source": true,
+  "size": 0,
+  "aggs": {
+    "tudo_salario": {
+      "stats": {
+        "field": "Liquido"
+      }
+    }
+  }
+}
+
+# Nomes únicos
+GET relatorio-folha-pagamento-anapolis-maio-2022/_search
+{
+  "_source": true,
+  "size": 0,
+  "aggs": {
+    "unique_names": {
+      "cardinality": {
+        "field": "Liquido"
+      }
+    }
+  }
+}
+
+# ----------- Bucket Agreggations ------------------------
+
+# Salário por faixa
+GET relatorio-folha-pagamento-anapolis-maio-2022/_search
+{
+  "size": 0,
+  "aggs": {
+    "salario_por_faixa": {
+      "histogram": {
+        "field": "Liquido",
+        "interval": 10000
+      }
+    }
+  }
+}
+
+# Salário entre faixa
+GET relatorio-folha-pagamento-anapolis-maio-2022/_search
+{
+  "size": 0,
+  "aggs": {
+    "salario_entre_faixas": {
+      "range": {
+        "field": "Liquido",
+         "ranges": [
+          {
+            "to": 10000
+          },
+          {
+            "from": 10000,
+            "to": 30000
+          },
+          {
+            "from": 100000
+          }
+        ]
+      }
+    }
+  }
+}
+
+# Salário mais comums - top 10 salários
+GET relatorio-folha-pagamento-anapolis-maio-2022/_search
+{
+  "size": 0,
+  "aggs": {
+    "top_10_salarios": {
+      "terms": {
+        "field": "Liquido",
+         "size": 10
+      }
+    }
+  }
+}
+
+# Salário menos comuns
+GET relatorio-folha-pagamento-anapolis-maio-2022/_search
+{
+  "size": 0,
+  "aggs": {
+    "top_10_salarios": {
+      "terms": {
+        "field": "Liquido",
+         "size": 10,
+         "order": {
+          "_count": "asc"
+        }
+      }
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 
