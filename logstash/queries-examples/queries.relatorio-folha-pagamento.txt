@@ -352,7 +352,7 @@ GET relatorio-folha-pagamento-anapolis-maio-2022/_search
 {
   "size": 0,
   "aggs": {
-    "top_10_salarios": {
+    "!top_10_salarios": {
       "terms": {
         "field": "Liquido",
          "size": 10,
@@ -365,9 +365,82 @@ GET relatorio-folha-pagamento-anapolis-maio-2022/_search
 }
 
 
+# Cargos mais comums - top 10 cargos
+GET relatorio-folha-pagamento-anapolis-maio-2022/_search
+{
+  "size": 0,
+  "aggs": {
+    "top_10_cargos": {
+      "terms": {
+        "field": "Cargo.keyword",
+         "size": 10
+      }
+    }
+  }
+}
 
+# Cargos menos comuns
+GET relatorio-folha-pagamento-anapolis-maio-2022/_search
+{
+  "size": 0,
+  "aggs": {
+    "!top_10_cargos": {
+      "terms": {
+        "field": "Cargo.keyword",
+         "size": 10,
+         "order": {
+          "_count": "asc"
+        }
+      }
+    }
+  }
+}
 
+# Soma dos salários mais comuns
+GET relatorio-folha-pagamento-anapolis-maio-2022/_search
+{
+  "size": 0,
+  "aggs": {
+    "top_10_cargos": {
+      "terms": {
+        "field": "Cargo.keyword",
+        "size": 10
+      }, 
+      "aggs": {
+        "soma_dos_salarios": {
+          "sum": {
+            "script": {
+              "source": "doc['Liquido'].value"
+            }
+          }
+        }
+      }
+    }
+  }
+}
 
+# Média dos salários mais comuns
+GET relatorio-folha-pagamento-anapolis-maio-2022/_search
+{
+  "size": 0,
+  "aggs": {
+    "top_10_cargos": {
+      "terms": {
+        "field": "Cargo.keyword",
+        "size": 10
+      }, 
+      "aggs": {
+        "media_dos_salarios": {
+          "avg": {
+            "script": {
+              "source": "doc['Liquido'].value"
+            }
+          }
+        }
+      }
+    }
+  }
+}
 
 
 
