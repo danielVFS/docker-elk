@@ -124,13 +124,47 @@ GET relatorio-folha-pagamento-anapolis-maio-2022/_search
   }
 }
 
-# ---------------------------------------------------------
+# ------------------ Query texts --------------------------------------
+
+GET relatorio-folha-pagamento-anapolis-maio-2022/_search
+{
+  "_source": true, 
+  "query": {
+    "match": {
+      "Cargo": {
+        "query": "Enfermagem Técnico em"
+      }
+    }
+  }
+}
 
 
+# match exactly
+GET relatorio-folha-pagamento-anapolis-maio-2022/_search
+{
+  "_source": false, 
+  "query": {
+    "match_phrase": {
+      "Cargo": {
+        "query": "Técnico em Enfermagem"
+      }
+    }
+  }
+}
 
-
-
-
+# find by multiple cargos
+GET relatorio-folha-pagamento-anapolis-maio-2022/_search
+{
+  "query": {
+    "multi_match": {
+      "query": "Goiânia",
+      "fields": [
+        "Origem",
+        "Destino" 
+      ]
+    }
+  }
+}
 
 
 
