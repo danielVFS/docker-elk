@@ -1,0 +1,26 @@
+input {
+	
+  file {
+    path => "/home/logstash/csv/datasetifgtce.csv"
+    start_position => "beginning"
+    sincedb_path => "/dev/null"
+  }
+}
+
+filter {
+  csv {
+		separator => ";"
+    columns => ["nota_fiscal_data_emissao", "nota_fiscal_valor_total", "nota_fiscal_qtd_total_produtos"]
+  }
+}
+
+output {
+   elasticsearch {
+			hosts => ["elasticsearch:9200"]
+			user => "elastic"
+   		password => "changeme"
+     	index => "notas-fiscais-tce"
+  }
+
+	stdout {}
+}
