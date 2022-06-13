@@ -1,5 +1,7 @@
 # Get all documents
-GET relatorio-folha-pagamento-anapolis-maio-2022/_search
+GET relatorio-folha-pagamento-anapolis-maio-2022-v2/_search
+
+GET notas-fiscais-tce/_search
 
 
 
@@ -83,7 +85,7 @@ GET relatorio-folha-pagamento-anapolis-maio-2022/_search
   }
 }
 
-GET relatorio-folha-pagamento-anapolis-maio-2022/_search
+GET relatorio-folha-pagamento-anapolis-maio-2022-v2/_search
 {
   "_source": false,
   "aggs": {
@@ -94,6 +96,7 @@ GET relatorio-folha-pagamento-anapolis-maio-2022/_search
     }
   }
 }
+
 
 # -------------- Precision and Recall --------------------
 
@@ -309,7 +312,7 @@ GET relatorio-folha-pagamento-anapolis-maio-2022/_search
 }
 
 # Salário entre faixa
-GET relatorio-folha-pagamento-anapolis-maio-2022/_search
+GET relatorio-folha-pagamento-anapolis-maio-2022-v2/_search
 {
   "size": 0,
   "aggs": {
@@ -334,7 +337,7 @@ GET relatorio-folha-pagamento-anapolis-maio-2022/_search
 }
 
 # Salário mais comums - top 10 salários
-GET relatorio-folha-pagamento-anapolis-maio-2022/_search
+GET relatorio-folha-pagamento-anapolis-maio-2022-v2/_search
 {
   "size": 0,
   "aggs": {
@@ -347,8 +350,24 @@ GET relatorio-folha-pagamento-anapolis-maio-2022/_search
   }
 }
 
+# Salário mais comums - top 10 salários
+GET relatorio-folha-pagamento-anapolis-maio-2022-v2/_search
+{
+  "size": 0,
+  "aggs": {
+    "top_10_salarios": {
+      "terms": {
+        "script": {
+          "source": "doc['Liquido'].value / 100"
+        }, 
+         "size": 10
+      }
+    }
+  }
+}
+
 # Salário menos comuns
-GET relatorio-folha-pagamento-anapolis-maio-2022/_search
+GET relatorio-folha-pagamento-anapolis-maio-2022-v2/_search
 {
   "size": 0,
   "aggs": {
@@ -442,7 +461,24 @@ GET relatorio-folha-pagamento-anapolis-maio-2022/_search
   }
 }
 
+# ----------- Mapping ---------------------------------
 
+# listando tipagens
+GET relatorio-folha-pagamento-anapolis-maio-2022/_mapping
+
+
+PUT relatorio-folha-pagamento-anapolis-maio-2022
+{
+  "mappings": {
+    "doc": {
+      "properties": {
+        "Descontos" : {
+          "type": "long"
+        }
+      }
+    }
+  }
+}
 
 
 
