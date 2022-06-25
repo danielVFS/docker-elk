@@ -11,10 +11,15 @@
   <a href="#-projeto">Projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-instalação">Instalação</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-queries">Queries</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-dashboards">Dashboards</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-como-contribuir">Como contribuir</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
 </p>
 
 <br>
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/54604875/175775396-5812ac7f-3573-4793-b089-d5afeb1aea72.png" width="100%">
+</p>
 
 ## :rocket: Tecnologias e Ferramentas Utilizadas
 
@@ -40,11 +45,9 @@ Faça o upload de sua base de dados em csv para a pasta /logstash/csv.
 
 Em /pipeline/logstash.conf, altere:
 
-```bash
 path -> altere a partir de, com seu nome do arquivo no pasta csv /home/logstash/csv/insira-aqui-seu-csv.
 filter -> altere o separator e columns, e mutate caso necessário.
 output -> Altere user e password, após isso altere o index, essa será o index dentro do elasticsearch.
-```
 
 Com o arquivo logstash configurando, suba o docker-compose.
 
@@ -56,11 +59,15 @@ Assim que o projeto subir, acesse `localhost:5601`, você acessará a interface 
 
 Procure por data-managment em `http://localhost:5601/app/management/kibana/dataViews` e cria sua visualização de dados a partir de seu índice criado(o Kibana irá identificar seu índice).
 
-Com isso, tudo estará pronto, você poderá acessar o `Console` para reproduzir as queries e `Dashboard` para visualização dos dados.
+Com isso, tudo estará pronto, você poderá acessar o `DevTools/Console` para reproduzir as queries e `Kibana/Dashboard` para visualização dos dados.
 
 ## 🔨 Queries
 
-As queries para serem usadas no console, se encontrar em `logstash/querie-examples/queries.relatorio-folha-pagamento.txt`
+As queries para serem usadas no console, se encontrar em `/logstash/querie-examples/queries.relatorio-folha-pagamento.txt`
+
+## 📊 Dashboards
+
+Para importar as dashboards(visualização de dados) que estão em `/dashboards`, procure em Kibana por `Saved Objects` -> `Import`, e selecione as dashboards .json que estão em `/dashboards`. Pronto, as visualização foram importadas.
 
 ## 🤔 Como contribuir
 
