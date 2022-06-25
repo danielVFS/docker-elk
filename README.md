@@ -35,8 +35,6 @@ Projeto de BD2 usando as ferramentas da elastic para visualização e manipulaç
 
 <a href="https://github.com/danielVFS/elk-stack-visualizacao-de-dados-governamentais/trabalho-escrito" target="_blank" >Acesse o trabalho escrito no seguinte repositório.</a>
 
-<br>
-
 ## 💻 Instalação
 
 Para iniciar o **Projeto** faça o seguinte:
