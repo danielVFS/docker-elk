@@ -1,127 +1,573 @@
-# Get all documents
-GET despesas-item-empenho-historico/_search
+
+GET _cluster/health
 
 
-# Get a documment
-GET despesas-item-empenho-historico/_doc/yWEwH4EBlcNIoj_JW3T4
+GET _nodes/stats
 
-# Update a documment
-POST despesas-item-empenho-historico/_update/yWEwH4EBlcNIoj_JW3T4
+
+GET _cat/nodes
+
+
+GET _cat/shards?v
+
+
+GET relatorio-folha-pagamento-anapolis-maio-2022-v2/_search
 {
-  "doc": {
-    "Data Operação": "13/01/2022"
+  "_source": ["Nome", "Matrícula", "Cargo"],
+  "query": {
+    "match": {
+      "Data Admissão": "21/12/2009"
+    }
   }
 }
 
-# Delete a document
-DELETE despesas-item-empenho-historico/_doc/yWEwH4EBlcNIoj_JW3T4
+
+# Get all documents
+GET relatorio-folha-pagamento-anapolis-maio-2022-v2/_search
+
+GET relatorio-folha-pagamento-anapolis-maio-2022-v2/_search
+{
+  "track_total_hits": true
+}
 
 
 # ----------- Search Queries ----------------------
-GET despesas-item-empenho-historico/_search
+
+
+GET relatorio-folha-pagamento-anapolis-maio-2022-v2/_search
 {
-  "_source": false,
+  "_source": true,
   "query": {
     "match": {
-      "Data Operação": "11/01/2022"
+      "Data Admissão": "21/12/2009"
     }
   }
 }
 
-GET despesas-item-empenho-historico/_search
+GET relatorio-folha-pagamento-anapolis-maio-2022-v2/_search
 {
-  "_source": false,
+  "_source": ["Nome", "Matrícula", "Cargo"],
   "query": {
     "match": {
-      "Código Empenho": "158153264292021NE000016"
+      "Data Admissão": "21/12/2009"
     }
   }
 }
 
 
-GET despesas-item-empenho-historico/_search
+
+GET relatorio-folha-pagamento-anapolis-maio-2022-v2/_search
 {
-  "_source": false,
-  "query": {
+  "query": {  
     "match": {
-      "Valor Total Item": "3545,64000"
+      "Proventos": 1388566
     }
   }
 }
 
-GET despesas-item-empenho-historico/_search
+GET relatorio-folha-pagamento-anapolis-maio-2022-v2/_search
 {
-  "_source": false,
+  "_source": true,
   "query": {
     "range": {
-      "Data Operação": {
-        "gte": "12/01/2021",
-        "lte": "13/01/2021"
+      "Data Admissão": {
+        "gte": "10/01/2012",
+        "lte": "10/01/2019"
       }
     }
   }
 }
 
 
-GET despesas-item-empenho-historico/_search
+GET relatorio-folha-pagamento-anapolis-maio-2022-v2/_search
+{
+  "_source": true,
+  "size": 0, 
+  "aggs": {
+    "by_tipo_de_folha": {
+      "terms": {
+        "field": "Tipo de Folha.keyword",
+        "size": 10000
+      }
+    }
+  }
+}
+
+GET relatorio-folha-pagamento-anapolis-maio-2022-v2/_search
 {
   "_source": false,
   "aggs": {
-    "by_category": {
+    "by_cargo": {
       "terms": {
-        "field": "Tipo Operação.keyword",
+        "field": "Cargo.keyword",
         "size": 100
       }
     }
   }
 }
 
-GET despesas-item-empenho-historico/_search
+GET relatorio-folha-pagamento-anapolis-maio-2022-v2/_search
+{
+  "_source": false,
+  "query": {
+    "match": {
+      "Cargo": "Nutricionista"
+    }
+  }, 
+  "aggs": {
+    "by_cargo": {
+      "terms": {
+        "field": "Cargo.keyword",
+        "size": 100
+      }
+    }
+  }
+}
+
+GET relatorio-folha-pagamento-anapolis-maio-2022-v2/_search
 {
   "_source": false,
   "aggs": {
-    "sum_unit_price": {
+    "soma_salarios": {
       "sum": {
-        "field": "Quantidade Item.keyword"
+        "script": {
+          "source": "doc['Liquido'].value / 10000"
+        }
       }
     }
   }
 }
 
 
-# ------------------------------------------------
+# -------------- Precision and Recall --------------------
 
-# Enable to use not only the keyword
-PUT despesas-item-empenho-historico/_mapping
+# Increasing Recall
+
+GET relatorio-folha-pagamento-anapolis-maio-2022-v2/_search
 {
-  "properties": {
-    "Tipo Operação": { 
-      "type":"text",
-      "fielddata": true
+  "_source": ["Nome","Cargo"],
+  "size": 4000, 
+  "query": {
+    "match": {
+      "Cargo": {
+        "query": "Técnico Enfermagem"
+      }
     }
   }
 }
 
-# Enable to use not only the keyword
-PUT despesas-item-empenho-historico/_mapping
+# Increasing Precision
+
+GET relatorio-folha-pagamento-anapolis-maio-2022-v2/_search
 {
-  "properties": {
-    "Quantidade Item": { 
-      "type": "text",
-      "fielddata": true
+  "_source": true,
+  "size": 4000, 
+  "query": {
+    "match": {
+      "Cargo": {
+        "query": "Técnico Enfermagem",
+        "operator": "and"
+      }
+    }
+  }
+}
+
+# ----------- Bool query ---------------------------------
+
+GET relatorio-folha-pagamento-anapolis-maio-2022-v2/_search
+{
+  "_source": ["Nome","Cargo", "Lotação"],
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "Cargo": "Asessor Geral"
+          }
+        }
+      ],
+      "must_not": [
+        {
+          "match": {
+            "Tipo de Folha": "Recisão"
+          }
+        }
+      ],
+      "should": [
+        {
+          "match": {
+            "Lotação": "S. M. de Governo e Recursos Humanos"
+          }
+        }
+      ],
+      "filter": [
+        {
+          "range": {
+            "Data Admissão": {
+              "gte": "10/01/2012",
+              "lte": "10/01/2019"
+            }
+          }
+        }
+      ]
+    }
+  }
+}
+
+
+# ------------------ Query texts --------------------------------------
+
+GET relatorio-folha-pagamento-anapolis-maio-2022-v2/_search
+{
+  "size": 4000, 
+  "_source": ["Nome","Cargo"],
+  "query": {
+    "match": {
+      "Cargo": {
+        "query": "Enfermagem Técnico em"
+      }
+    }
+  }
+}
+
+
+# match exactly
+GET relatorio-folha-pagamento-anapolis-maio-2022-v2/_search
+{
+  "size": 4000, 
+  "_source": ["Nome","Cargo"],
+  "query": {
+    "match_phrase": {
+      "Cargo": {
+        "query": "Técnico em Enfermagem"
+      }
+    }
+  }
+}
+
+# find by multiple fields
+GET relatorio-folha-pagamento-anapolis-maio-2022-v2/_search
+{
+  "query": {
+    "multi_match": {
+      "query": "Goiânia",
+      "fields": [
+        "Origem",
+        "Destino" 
+      ]
+    }
+  }
+}
+
+# find by multiple fields
+# ^2 means we are giving more weight on score than the others
+GET relatorio-folha-pagamento-anapolis-maio-2022-v2/_search
+{
+  "query": {
+    "multi_match": {
+      "query": "Goiânia",
+      "fields": [
+        "Origem^2",
+        "Destino" 
+      ]
     }
   }
 }
 
 
 
+# ----------- Metric Agregations ---------------------------------
+
+# soma dos salários
+GET relatorio-folha-pagamento-anapolis-maio-2022-v2/_search
+{
+  "_source": false,
+  "size": 0,
+  "aggs": {
+    "soma_salarios": {
+      "sum": {
+        "script": {
+          "source": "doc['Liquido'].value"
+       }
+      }
+    }
+  }
+}
+
+# menor salário
+GET relatorio-folha-pagamento-anapolis-maio-2022-v2/_search
+{
+  "aggs": {
+    "menor_salario": {
+      "min": {
+        "field": "Liquido"
+      }
+    }
+  }
+}
+
+# maior salário
+GET relatorio-folha-pagamento-anapolis-maio-2022-v2/_search
+{
+  "_source": false,
+  "size": 0,
+  "aggs": {
+    "maior_salario": {
+      "max": {
+        "field": "Liquido"
+      }
+    }
+  }
+}
+
+# media salário
+GET relatorio-folha-pagamento-anapolis-maio-2022-v2/_search
+{
+  "_source": true,
+  "size": 0,
+  "aggs": {
+    "media_salario": {
+      "avg": {
+        "field": "Liquido"
+      }
+    }
+  }
+}
+
+# Todos em um
+GET relatorio-folha-pagamento-anapolis-maio-2022-v2/_search
+{
+  "_source": true,
+  "size": 0,
+  "aggs": {
+    "tudo_salario": {
+      "stats": {
+        "field": "Liquido"
+      }
+    }
+  }
+}
+
+# Nomes únicos
+GET relatorio-folha-pagamento-anapolis-maio-2022-v2/_search
+{
+  "_source": true,
+  "size": 0,
+  "aggs": {
+    "unique_names": {
+      "cardinality": {
+        "field": "Nome.keyword"
+      }
+    }
+  }
+}
+
+# media salário
+GET relatorio-folha-pagamento-anapolis-maio-2022-v2/_search
+{
+  "size": 0,
+  "query": {
+    "match": {
+      "Cargo": "Professor Nível IV"
+    }
+  },
+  "aggs": {
+    "media_salario": {
+      "avg": {
+        "field": "Liquido"
+      }
+    }
+  }
+}
+
+# ----------- Bucket Agreggations ------------------------
+
+GET relatorio-folha-pagamento-anapolis-maio-2022-v2/_search
+{
+  "size": 0,
+  "aggs": {
+    "Nome da agregação": {
+      "date_histogram": {
+        "field":"Campo no qual irá agregar",
+        "fixed_interval": "Intervalor de tempo -> 8h"
+      }
+    }
+  }
+}
+
+GET relatorio-folha-pagamento-anapolis-maio-2022-v2/_search
+{
+  "size": 0,
+  "aggs": {
+    "Nome da agregação": {
+      "date_histogram": {
+        "field":"Campo no qual irá agregar",
+        "calendar_interval": "Intervalor de tempo -> 1M"
+      }
+    }
+  }
+}
+
+# Salário por faixa
+GET relatorio-folha-pagamento-anapolis-maio-2022-v2/_search
+{
+  "size": 0,
+  "aggs": {
+    "salario_por_faixa": {
+      "histogram": {
+        "field": "Liquido",
+        "interval": 100000
+      }
+    }
+  }
+}
+
+# Salário entre faixa
+GET relatorio-folha-pagamento-anapolis-maio-2022-v2/_search
+{
+  "size": 0,
+  "aggs": {
+    "salario_entre_faixas": {
+      "range": {
+        "field": "Liquido",
+         "ranges": [
+          {
+            "to": 200000
+          },
+          {
+            "from": 200000,
+            "to": 1000000
+          },
+          {
+            "from": 10000000
+          }
+        ]
+      }
+    }
+  }
+}
+
+# Salário mais comums - top 10 salários
+GET relatorio-folha-pagamento-anapolis-maio-2022-v2/_search
+{
+  "size": 0,
+  "aggs": {
+    "top_10_salarios": {
+      "terms": {
+        "field": "Liquido",
+         "size": 10
+      }
+    }
+  }
+}
+
+# Salário mais comums - top 10 salários
+GET relatorio-folha-pagamento-anapolis-maio-2022-v2/_search
+{
+  "size": 0,
+  "aggs": {
+    "top_10_salarios": {
+      "terms": {
+        "script": {
+          "source": "doc['Liquido'].value / 100"
+        }, 
+         "size": 10
+      }
+    }
+  }
+}
+
+# Salário menos comun
+GET relatorio-folha-pagamento-anapolis-maio-2022-v2/_search
+{
+  "size": 0,
+  "aggs": {
+    "!top_10_salarios": {
+      "terms": {
+        "field": "Liquido",
+         "size": 10,
+         "order": {
+          "_count": "asc"
+        }
+      }
+    }
+  }
+}
 
 
+# Cargos mais comums - top 10 cargos
+GET relatorio-folha-pagamento-anapolis-maio-2022-v2/_search
+{
+  "size": 0,
+  "aggs": {
+    "top_10_cargos": {
+      "terms": {
+        "field": "Cargo.keyword",
+         "size": 10
+      }
+    }
+  }
+}
 
+# Cargos menos comuns
+GET relatorio-folha-pagamento-anapolis-maio-2022-v2/_search
+{
+  "size": 0,
+  "aggs": {
+    "!top_10_cargos": {
+      "terms": {
+        "field": "Cargo.keyword",
+         "size": 10,
+         "order": {
+          "_count": "asc"
+        }
+      }
+    }
+  }
+}
 
+# Soma dos salários mais comuns
+GET relatorio-folha-pagamento-anapolis-maio-2022-v2/_search
+{
+  "size": 0,
+  "aggs": {
+    "top_10_cargos": {
+      "terms": {
+        "field": "Cargo.keyword",
+        "size": 10
+      }, 
+      "aggs": {
+        "soma_dos_salarios": {
+          "sum": {
+            "script": {
+              "source": "doc['Liquido'].value"
+            }
+          }
+        }
+      }
+    }
+  }
+}
 
-
-
-
-
-
+# Média dos salários mais comuns
+GET relatorio-folha-pagamento-anapolis-maio-2022-v2/_search
+{
+  "size": 0,
+  "aggs": {
+    "top_10_cargos": {
+      "terms": {
+        "field": "Cargo.keyword",
+        "size": 10
+      }, 
+      "aggs": {
+        "media_dos_salarios": {
+          "avg": {
+            "script": {
+              "source": "doc['Liquido'].value"
+            }
+          }
+        }
+      }
+    }
+  }
+}
