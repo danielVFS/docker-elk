@@ -1,17 +1,16 @@
 <h1 align="center">
-    Next Blog
+    ELK Stack -Análise de Dados Governamentais
 </h1>
 
 <h3 align="center">
-  Projeto do meu blog desenvolvido com Next.js
+  Projeto de BD2 usando as ferramentas da elastic para visualização e manipulação de dados do portal de transparência.
 </h3>
 
 <p align="center">
-  <a href="#rocket-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-projeto">Projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-instalação">Instalação</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-como-contribuir">Como contribuir</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="https://github.com/danielVFS/strapi-blog" target="_blank" >Backend</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
 </p>
 
 <br>
@@ -20,25 +19,15 @@
 
 Esse projeto foi desenvolvido com as seguintes tecnologias:
 
-- [Next.js](https://nextjs.org/)
-- [Typescript](https://www.typescriptlang.org/)
-- [GraphQL](https://graphql.org/)
-- [Jest](https://jestjs.io/pt-BR/)
-- [Styled Components](https://styled-components.com/)
-- [Storybook](https://storybook.js.org/)
-- [Eslint](https://eslint.org/)
-- [Prettier](https://prettier.io/)
-- [Husky](https://typicode.github.io/husky/#/)
+- [Elasticsearch](https://www.elastic.co/pt/what-is/elasticsearch)
+- [Kibana](https://www.elastic.co/pt/kibana/)
+- [Logstash](https://www.elastic.co/pt/logstash/)
 
 ## 💻 Projeto
 
-Next Blog - Blog desenvolvido com Next.js para postagens sobre tecnologias como
-um todo.
-<h4 align="center">
-  💻 Blog - Demo
-  <br>
-  <img alt="Frontend" src="https://user-images.githubusercontent.com/54604875/117747383-7778d700-b1e4-11eb-8dfe-b7e70c14cfd6.gif">
-</h4>
+Projeto de BD2 usando as ferramentas da elastic para visualização e manipulação de dados do portal de transparência.
+
+<a href="https://github.com/danielVFS/docker-elk/trabalho-escrito" target="_blank" >Acesse o trabalho escrito no seguinte repositório.</a>
 
 <br>
 
@@ -75,4 +64,4 @@ Depois que o merge da sua pull request for feito, você pode deletar a sua branc
 
 ---
 
-Feito por [Daniel Vitor](https://github.com/danielVFS)
+Feito por [Daniel Vitor](https://github.com/danielVFS) e [Rafael Souza](https://github.com/Rajael-dev)
