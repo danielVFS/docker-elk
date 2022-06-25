@@ -21,7 +21,7 @@
   <img src="https://user-images.githubusercontent.com/54604875/175775396-5812ac7f-3573-4793-b089-d5afeb1aea72.png" width="100%">
 </p>
 
-## :rocket: Tecnologias e Ferramentas Utilizadas
+## 🚀 Tecnologias e Ferramentas Utilizadas
 
 Esse projeto foi desenvolvido com as seguintes tecnologias:
 
