@@ -10,6 +10,7 @@
   <a href="#-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-projeto">Projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-instalação">Instalação</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-queries">Queries</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-como-contribuir">Como contribuir</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
 </p>
 
@@ -27,31 +28,39 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 Projeto de BD2 usando as ferramentas da elastic para visualização e manipulação de dados do portal de transparência.
 
-<a href="https://github.com/danielVFS/docker-elk/trabalho-escrito" target="_blank" >Acesse o trabalho escrito no seguinte repositório.</a>
+<a href="https://github.com/danielVFS/elk-stack-visualizacao-de-dados-governamentais/trabalho-escrito" target="_blank" >Acesse o trabalho escrito no seguinte repositório.</a>
 
 <br>
 
 ## 💻 Instalação
 
-Para iniciar o **Frontend** em Next.js certifique-se de ter instalado:
+Para iniciar o **Projeto** faça o seguinte:
 
-- [Node.JS LTS](https://nodejs.org/en/)
-- [Yarn](https://classic.yarnpkg.com/en/docs/install/#debian-stable)
+Faça o upload de sua base de dados em csv para a pasta /logstash/csv.
 
-Verifique se o Node e o NPM foram instalados corretamente.
-
-```bash
-node --version
-yarn -v
-```
+Em /pipeline/logstash.conf, altere:
 
 ```bash
-cd frontend
-yarn install - para baixar todas dependências do projeto.
-yarn run dev
+path -> altere a partir de, com seu nome do arquivo no pasta csv /home/logstash/csv/insira-aqui-seu-csv.
+filter -> altere o separator e columns, e mutate caso necessário.
+output -> Altere user e password, após isso altere o index, essa será o index dentro do elasticsearch.
 ```
 
-Assim que o processo terminar, automaticamente será aberta no seu navegador a página `localhost:3000` contendo o projeto.
+Com o arquivo logstash configurando, suba o docker-compose.
+
+```bash
+sudo docker-compose up -d
+```
+
+Assim que o projeto subir, acesse `localhost:5601`, você acessará a interface do Kibana.
+
+Procure por data-managment em `http://localhost:5601/app/management/kibana/dataViews` e cria sua visualização de dados a partir de seu índice criado(o Kibana irá identificar seu índice).
+
+Com isso, tudo estará pronto, você poderá acessar o `Console` para reproduzir as queries e `Dashboard` para visualização dos dados.
+
+## 🔨 Queries
+
+As queries para serem usadas no console, se encontrar em `logstash/querie-examples/queries.relatorio-folha-pagamento.txt`
 
 ## 🤔 Como contribuir
 
