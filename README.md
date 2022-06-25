@@ -41,7 +41,7 @@ Para iniciar o **Projeto** faça o seguinte:
 
 Faça o upload de sua base de dados em csv para a pasta /logstash/csv.
 
-Em /pipeline/logstash.conf, altere:
+Em `/pipeline/logstash.conf`, altere:
 
 path -> altere a partir de, com seu nome do arquivo no pasta csv /home/logstash/csv/insira-aqui-seu-csv.
 filter -> altere o separator e columns, e mutate caso necessário.
