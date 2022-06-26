@@ -33,15 +33,17 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 Projeto de BD2 usando as ferramentas da elastic para visualização e manipulação de dados do portal de transparência.
 
-<a href="https://github.com/danielVFS/elk-stack-visualizacao-de-dados-governamentais/trabalho-escrito" target="_blank" >Acesse o trabalho escrito no seguinte repositório.</a>
+<a href="https://github.com/danielVFS/elk-stack-visualizacao-de-dados-governamentais/tree/main/trabalho-escrito" target="_blank" >Acesse o trabalho escrito no seguinte repositório.</a>
 
 ## 💻 Instalação
 
 Para iniciar o **Projeto** faça o seguinte:
 
 Faça o upload de sua base de dados em csv para a pasta /logstash/csv.
+<a href="https://acessoainformacao.anapolis.go.gov.br/cidadao/transparencia/sgservidores?_ga=2.163007487.230206085.1656268290-883115469.1656109624" target="_blank" >Exemplo de CSV:
+</a>
 
-Em /pipeline/logstash.conf, altere:
+Em `/pipeline/logstash.conf`, altere:
 
 path -> altere a partir de, com seu nome do arquivo no pasta csv /home/logstash/csv/insira-aqui-seu-csv.
 filter -> altere o separator e columns, e mutate caso necessário.
