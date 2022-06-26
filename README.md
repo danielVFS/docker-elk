@@ -40,6 +40,8 @@ Projeto de BD2 usando as ferramentas da elastic para visualização e manipulaç
 Para iniciar o **Projeto** faça o seguinte:
 
 Faça o upload de sua base de dados em csv para a pasta /logstash/csv.
+<a href="https://acessoainformacao.anapolis.go.gov.br/cidadao/transparencia/sgservidores?_ga=2.163007487.230206085.1656268290-883115469.1656109624" target="_blank" >Exemplo de CSV:
+</a>
 
 Em `/pipeline/logstash.conf`, altere:
 
