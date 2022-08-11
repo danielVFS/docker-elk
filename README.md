@@ -34,6 +34,8 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 Projeto de BD2 usando as ferramentas da elastic para visualização e manipulação de dados do portal de transparência.
 
 <a href="https://github.com/danielVFS/elk-stack-visualizacao-de-dados-governamentais/tree/main/trabalho-escrito" target="_blank" >Acesse o trabalho escrito no seguinte repositório.</a>
+<a href="https://docs.google.com/presentation/d/135YCu1JNyZM_ZWp90d9fyeFIdHHRDLAMWtBsJOJrsBs/edit?usp=sharing" target="_blank" >Acesse os slides do trabalho.</a>
+
 
 ## 💻 Instalação
 
